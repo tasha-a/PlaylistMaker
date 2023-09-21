@@ -8,6 +8,7 @@
     <dimen name="height_button">0dp</dimen>
     <dimen name="padding_screen_vert">14dp</dimen>
     <dimen name="marginTop_16">16dp</dimen>
-    <dimen name="text_basic">22sp</dimen>
+    <dimen name="text_basic22">22sp</dimen>
+    <dimen name="text_16">16sp</dimen>
     <dimen name="icon_size">24dp</dimen>
 </resources>

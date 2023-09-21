@@ -7,4 +7,7 @@
     <string name="forward">Пользовательское соглашение</string>
     <string name="media">Медиатека</string>
     <string name="search">Поиск</string>
+    <string name="email">aristova.natalya@gmail.com</string>
+    <string name="subject">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
+    <string name="text_mail">Спасибо разработчикам и разработчицам за крутое приложение!</string>
 </resources>

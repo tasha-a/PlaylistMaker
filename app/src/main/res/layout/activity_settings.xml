@@ -2,118 +2,55 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingHorizontal="@dimen/padding_screen_hor"
-    android:paddingVertical="@dimen/padding_screen_vert">
+    style="@style/setting_layout">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingBottom="12dp">
 
         <ImageButton
             android:id="@+id/back"
-            android:layout_width="@dimen/icon_size"
-            android:layout_height="@dimen/icon_size"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="@color/white"
-            android:src="@drawable/back_button" />
+            style="@style/button_back"
+            android:padding="12dp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textTop"
             android:paddingLeft="24dp"
-            android:text="@string/settings"
-            android:textColor="@color/black"
-            android:textSize="22sp" />
+            android:text="@string/settings" />
 
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:importantForAccessibility="no"
-        android:paddingVertical="14dp">
+    <Switch
+        style="@style/switch_style"
+        android:gravity="left|center_vertical"
+        android:text="@string/dark_theme" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/dark_theme"
-            android:textSize="@dimen/text_setting_menu" />
+    <Button
+        android:id="@+id/shareButton"
+        style="@style/setting_button"
+        android:text="@string/share"
+        android:drawableRight="@drawable/share" />
 
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:importantForAccessibility="no"
-            android:paddingVertical="10dp"
-            android:paddingLeft="15dp" />
+    <Button
+        android:id="@+id/supportButton"
+        style="@style/setting_button"
+        android:text="@string/support"
+        android:drawableRight="@drawable/support"/>
 
-    </FrameLayout>
+    <Button
+        android:id="@+id/forwardButton"
+        style="@style/setting_button"
+        android:text="@string/forward"
+        android:drawableRight="@drawable/arrow_forward" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/padding_vertical_set">
+<!--        app:icon="@drawable/arrow_forward"-->
+<!--        app:iconGravity="end"-->
+<!--        app:iconTint="@color/text_grey"-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/share"
-            android:textSize="@dimen/text_setting_menu" />
 
-        <ImageView
-            android:layout_width="@dimen/icon_size"
-            android:layout_height="@dimen/icon_size"
-            android:layout_gravity="end"
-            android:src="@drawable/share" />
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/padding_vertical_set">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/support"
-            android:textSize="@dimen/text_setting_menu" />
-
-        <ImageView
-            android:layout_width="@dimen/icon_size"
-            android:layout_height="@dimen/icon_size"
-            android:layout_gravity="end"
-            android:src="@drawable/support" />
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/padding_vertical_set">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/forward"
-            android:textSize="@dimen/text_setting_menu" />
-
-        <ImageView
-            android:layout_width="@dimen/icon_size"
-            android:layout_height="@dimen/icon_size"
-            android:layout_gravity="end"
-            android:src="@drawable/arrow_forward" />
-
-    </FrameLayout>
 
 </LinearLayout>

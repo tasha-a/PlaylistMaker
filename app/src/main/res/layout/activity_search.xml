@@ -7,15 +7,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="12dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="12dp">
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/back"
             style="@style/button_back"
-            android:padding="12dp" />
+            android:src="@drawable/back_button" />
 
         <TextView
             style="@style/textTop"
@@ -24,36 +23,34 @@
     </LinearLayout>
 
 
-<FrameLayout
-    style="@style/frameLayout_search"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".Search">
-
-    <ImageView
-        android:id="@+id/clearIcon"
-        style="@style/icon_clear"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        style="@style/frameLayout_search"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|center_vertical"
-        android:visibility="gone"
-        app:srcCompat="@drawable/clear" />
+        tools:context=".Search">
 
-    <EditText
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/searchView"
-        style="@style/edit_text"
-        android:drawablePadding="8dp"
-        android:hint="@string/search"
-        android:inputType="text"
-        android:lines="1"
-        android:maxLines="30"
-        android:minHeight="36dp"
-        />
-<!--    -->
+        <ImageView
+            android:id="@+id/clearIcon"
+            style="@style/icon_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:visibility="gone"
+            app:srcCompat="@drawable/clear" />
 
-</FrameLayout>
+        <EditText
+            android:id="@+id/searchView"
+            style="@style/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:drawablePadding="8dp"
+            android:hint="@string/search"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLines="30"
+            android:minHeight="36dp" />
 
+    </FrameLayout>
 
 </LinearLayout>

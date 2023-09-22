@@ -6,21 +6,20 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
-import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.view.inputmethod
 .InputMethodManager;
-import android.widget.Toast
 
 class Search : AppCompatActivity() {
 
     companion object {
         const val INPUT_SEARCH = "INPUT_SEARCH"
     }
-    private lateinit var inputEditText : EditText
-//    private lateinit var input : String
+
+    private lateinit var inputEditText: EditText
+
+    //    private lateinit var input : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
@@ -28,7 +27,7 @@ class Search : AppCompatActivity() {
         val buttonBack = findViewById<ImageButton>(R.id.back)
         inputEditText = findViewById<EditText>(R.id.searchView)
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
-        var input : String = String()
+        var input: String = String()
 
         buttonBack.setOnClickListener {
             finish()
@@ -44,7 +43,7 @@ class Search : AppCompatActivity() {
 
 
         val simpleTextWatcher = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.isNullOrEmpty()) {
@@ -56,7 +55,7 @@ class Search : AppCompatActivity() {
                 }
             }
 
-            override fun afterTextChanged(s: Editable?) { }
+            override fun afterTextChanged(s: Editable?) {}
         }
 
         inputEditText.addTextChangedListener(simpleTextWatcher)

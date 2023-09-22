@@ -7,19 +7,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="28dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="12dp">
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/back"
             style="@style/button_back"
-            android:padding="12dp" />
+            android:src="@drawable/back_button" />
 
         <TextView
             style="@style/textTop"
-            android:paddingLeft="24dp"
             android:text="@string/settings" />
 
     </LinearLayout>
@@ -32,25 +30,19 @@
     <Button
         android:id="@+id/shareButton"
         style="@style/setting_button"
-        android:text="@string/share"
-        android:drawableRight="@drawable/share" />
+        android:drawableRight="@drawable/share"
+        android:text="@string/share" />
 
     <Button
         android:id="@+id/supportButton"
         style="@style/setting_button"
-        android:text="@string/support"
-        android:drawableRight="@drawable/support"/>
+        android:drawableRight="@drawable/support"
+        android:text="@string/support" />
 
     <Button
         android:id="@+id/forwardButton"
         style="@style/setting_button"
-        android:text="@string/forward"
-        android:drawableRight="@drawable/arrow_forward" />
-
-<!--        app:icon="@drawable/arrow_forward"-->
-<!--        app:iconGravity="end"-->
-<!--        app:iconTint="@color/text_grey"-->
-
-
+        android:drawableRight="@drawable/arrow_forward"
+        android:text="@string/forward" />
 
 </LinearLayout>

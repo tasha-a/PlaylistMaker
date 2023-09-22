@@ -1,17 +1,12 @@
 package com.example.playlistmaker
 
 import android.content.Intent
-import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import android.net.Uri
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.text.TextWatcher
-import android.text.Editable
+
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -32,7 +27,11 @@ class SettingsActivity : AppCompatActivity() {
         buttonShare.setOnClickListener {
             val shareIntent = Intent(Intent.ACTION_SEND)
             shareIntent.type = "text/plain"
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "https://practicum.yandex.ru/profile/android-developer/")
+            var link = getResources().getString(R.string.link)
+            shareIntent.putExtra(
+                Intent.EXTRA_TEXT,
+                link
+            )
             startActivity(Intent.createChooser(shareIntent, "Поделиться"))
         }
 
@@ -43,17 +42,18 @@ class SettingsActivity : AppCompatActivity() {
             val text = resources.getString(R.string.text_mail)
 
             supportIntent.data = Uri.parse("mailto:")
-            supportIntent.putExtra(Intent. EXTRA_EMAIL, email)
+            supportIntent.putExtra(Intent.EXTRA_EMAIL, email)
             supportIntent.putExtra(Intent.EXTRA_SUBJECT, subject)
-            supportIntent.putExtra(Intent. EXTRA_TEXT, text)
+            supportIntent.putExtra(Intent.EXTRA_TEXT, text)
             startActivity(supportIntent)
         }
 
         buttonForward.setOnClickListener {
-            val forwardtIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://yandex.ru/legal/practicum_offer/"))
+            val link_share = getResources().getString(R.string.link_share)
+            val forwardtIntent =
+                Intent(Intent.ACTION_VIEW, Uri.parse(link_share ))
             startActivity(forwardtIntent)
         }
-
 
 
     }

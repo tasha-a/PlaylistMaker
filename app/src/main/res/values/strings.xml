@@ -10,4 +10,6 @@
     <string name="email">aristova.natalya@gmail.com</string>
     <string name="subject">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
     <string name="text_mail">Спасибо разработчикам и разработчицам за крутое приложение!</string>
+    <string name="link">https://practicum.yandex.ru/profile/android-developer</string>
+    <string name="link_share">https://yandex.ru/legal/practicum_offer/</string>
 </resources>

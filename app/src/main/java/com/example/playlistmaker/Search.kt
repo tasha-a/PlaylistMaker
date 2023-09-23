@@ -8,8 +8,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.view.inputmethod
-.InputMethodManager;
+import android.view.inputmethod.InputMethodManager
 
 class Search : AppCompatActivity() {
 
@@ -17,9 +16,10 @@ class Search : AppCompatActivity() {
         const val INPUT_SEARCH = "INPUT_SEARCH"
     }
 
+    private var input: String = ""
+
     private lateinit var inputEditText: EditText
 
-    //    private lateinit var input : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
@@ -27,7 +27,6 @@ class Search : AppCompatActivity() {
         val buttonBack = findViewById<ImageButton>(R.id.back)
         inputEditText = findViewById<EditText>(R.id.searchView)
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
-        var input: String = String()
 
         buttonBack.setOnClickListener {
             finish()
@@ -49,7 +48,7 @@ class Search : AppCompatActivity() {
                 if (s.isNullOrEmpty()) {
                     clearButton.visibility = View.GONE
                 } else {
-                    input += "${s.toString()}"
+                    input += s.toString()
 
                     clearButton.visibility = View.VISIBLE
                 }
@@ -62,14 +61,17 @@ class Search : AppCompatActivity() {
 
     }
 
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(INPUT_SEARCH, inputEditText.text.toString())
+        outState.putString("INPUT_SEARCH", input)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        inputEditText.setText(savedInstanceState.getString("INPUT_SEARCH"))
+        input = savedInstanceState.getString("INPUT_SEARCH") ?: ""
+
+
     }
 
 }

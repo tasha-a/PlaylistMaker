@@ -1,9 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Search">
+    style="@style/setting_layout">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/back"
+            style="@style/button_back"
+            android:src="@drawable/back_button" />
+
+        <TextView
+            style="@style/textTop"
+            android:text="@string/search" />
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        style="@style/frameLayout_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".Search">
+
+        <ImageView
+            android:id="@+id/clearIcon"
+            style="@style/icon_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:visibility="gone"
+            app:srcCompat="@drawable/clear" />
+
+        <EditText
+            android:id="@+id/searchView"
+            style="@style/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:drawablePadding="8dp"
+            android:hint="@string/search"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLines="30"
+            android:minHeight="36dp" />
+
+    </FrameLayout>
+
+</LinearLayout>

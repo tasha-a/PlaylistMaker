@@ -27,7 +27,7 @@
         style="@style/frameLayout_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".Search">
+        android:layout_marginBottom="24dp">
 
         <ImageView
             android:id="@+id/clearIcon"
@@ -52,5 +52,11 @@
             android:minHeight="36dp" />
 
     </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </LinearLayout>

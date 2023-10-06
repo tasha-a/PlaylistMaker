@@ -14,20 +14,17 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 
 class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private val trackNameView: TextView
-    private val trackArtistView: TextView
-    private val trackTimeView: TextView
-    private val trackImage: ImageView
 
-    init {
-        trackNameView = itemView.findViewById(R.id.trackName)
-        trackArtistView = itemView.findViewById(R.id.trackArtist)
-        trackTimeView = itemView.findViewById(R.id.trackTime)
-        trackImage = itemView.findViewById(R.id.trackImage)
-    }
+    private val trackNameView: TextView = itemView.findViewById(R.id.trackName)
+    private val trackArtistView: TextView = itemView.findViewById(R.id.trackArtist)
+    private val trackTimeView: TextView = itemView.findViewById(R.id.trackTime)
+    private val trackImage: ImageView = itemView.findViewById(R.id.trackImage)
 
     @RequiresApi(Build.VERSION_CODES.S)
     fun bind(model: Track) {
+
+        val cornerRadiusDp = 2
+        val cornerRadiusPx = dpToPx(cornerRadiusDp, itemView.context)
 
         trackNameView.text = model.trackName
         trackArtistView.text = model.artistName
@@ -40,8 +37,6 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             .into(trackImage)
     }
 
-    val cornerRadiusDp = 2
-    val cornerRadiusPx = dpToPx(cornerRadiusDp, itemView.context) // Переводим радиус из dp в px
 
     private fun dpToPx(dp: Int, context: Context): Int {
         return TypedValue.applyDimension(

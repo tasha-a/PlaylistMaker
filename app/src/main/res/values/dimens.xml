@@ -11,4 +11,6 @@
     <dimen name="text_basic22">22sp</dimen>
     <dimen name="text_16">16sp</dimen>
     <dimen name="icon_size">24dp</dimen>
+    <dimen name="text_artist_11">11sp</dimen>
+    <dimen name="ic_size_45">45dp</dimen>
 </resources>

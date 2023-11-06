@@ -22,7 +22,8 @@
 
     </LinearLayout>
 
-    <Switch
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/theme_switcher"
         style="@style/switch_style"
         android:gravity="left|center_vertical"
         android:text="@string/dark_theme" />

@@ -22,10 +22,14 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val trackImage: ImageView = itemView.findViewById(R.id.trackImage)
 
     @RequiresApi(Build.VERSION_CODES.S)
-    fun bind(model: Track) {
+    fun bind(model: Track, listener: TrackAdapter.TrackListener) {
 
         val cornerRadiusDp = 2
         val cornerRadiusPx = dpToPx(cornerRadiusDp, itemView.context)
+
+        itemView.setOnClickListener {
+            listener.onClick(model)
+        }
 
         trackNameView.text = model.trackName
         trackArtistView.text = model.artistName

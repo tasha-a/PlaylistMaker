@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import android.net.Uri
-
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -15,10 +15,20 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
+        val sharedPreferences = getSharedPreferences(MY_PREF, MODE_PRIVATE)
         val buttonBack = findViewById<ImageButton>(R.id.back)
         val buttonShare = findViewById<Button>(R.id.shareButton)
         val buttonSupport = findViewById<Button>(R.id.supportButton)
         val buttonForward = findViewById<Button>(R.id.forwardButton)
+        val themeSwitcher = findViewById<SwitchMaterial>(R.id.theme_switcher)
+
+
+        themeSwitcher.setOnCheckedChangeListener { _, checked ->
+            (applicationContext as App).switchTheme(checked)
+            sharedPreferences.edit()
+                .putBoolean(DARK_MODE, checked)
+                .apply()
+        }
 
         buttonBack.setOnClickListener {
             finish()

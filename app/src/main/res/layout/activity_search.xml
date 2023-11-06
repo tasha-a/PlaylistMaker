@@ -44,32 +44,50 @@
             style="@style/edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minWidth="48dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginEnd="32dp"
             android:drawablePadding="8dp"
             android:hint="@string/search"
             android:inputType="text"
             android:lines="1"
             android:maxLines="30"
-            android:minHeight="48dp"
+            android:minHeight="@dimen/min_height_48"
             android:imeOptions="actionDone"
             android:singleLine="true"
             android:importantForAccessibility="no"/>
 
     </FrameLayout>
 
+    <TextView android:id="@+id/searchHint"
+        style="@style/search_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/text_search_hint"
+        android:visibility="gone"/>
 
-<FrameLayout
+
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:visibility="visible"/>
+
+    <Button
+        android:id="@+id/button_clear_history"
+        style="@style/button_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
+        android:text="@string/text_buton_clear_history"
+        android:visibility="gone" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -96,22 +114,18 @@
 
         <Button
             android:id="@+id/button_update_view"
-            style="@style/button_update"
+            style="@style/button_style"
             android:layout_width="wrap_content"
-            android:minWidth="90dp"
-            android:minHeight="48dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="248dp"
-            android:paddingHorizontal="14dp"
-            android:paddingVertical="8dp"
             android:text="@string/button_update"
-            android:visibility="gone"
-            app:cornerRadius="54dp" />
+            android:visibility="gone" />
 
 </FrameLayout>
 
-</FrameLayout>
+</LinearLayout>
+
 
 
 </LinearLayout>

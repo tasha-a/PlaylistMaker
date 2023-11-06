@@ -1,6 +1,11 @@
 <resources>
+
+<!--    Main screen-->
     <string name="app_name">Playlist Maker</string>
 
+
+
+<!--    Setting screen-->
     <string name="settings">Настройки</string>
     <string name="dark_theme">Темная тема</string>
     <string name="share">Поделиться приложением</string>
@@ -16,9 +21,13 @@
     <string name="link">https://practicum.yandex.ru/profile/android-developer</string>
     <string name="link_share">https://yandex.ru/legal/practicum_offer/</string>
 
+<!--    Search screen-->
     <string name="error_server_text">Ничего не нашлось</string>
     <string name="error_internet_text">Проблемы со связью \n\ \n\ Загрузка не удалась. Проверьте подключение к интернету</string>
     <string name="button_update">Обновить</string>
     <string name="text_error_other">Возникла проблема на стороне клиента</string>
+
+    <string name="text_search_hint">Вы искали</string>
+    <string name="text_buton_clear_history">Очистить историю</string>
 
 </resources>

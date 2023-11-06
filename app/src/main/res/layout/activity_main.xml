@@ -15,7 +15,7 @@
 
     <Button
         android:id="@+id/searchButton"
-        style="@style/ButtonStyle"
+        style="@style/button_main"
         android:layout_marginTop="40dp"
         android:text="@string/search"
         app:cornerRadius="@dimen/button_radius"
@@ -24,7 +24,7 @@
 
     <Button
         android:id="@+id/media"
-        style="@style/ButtonStyle"
+        style="@style/button_main"
         android:text="@string/media"
         app:cornerRadius="@dimen/button_radius"
         app:icon="@drawable/media"
@@ -32,7 +32,7 @@
 
     <Button
         android:id="@+id/settings"
-        style="@style/ButtonStyle"
+        style="@style/button_main"
         android:text="@string/settings"
         app:cornerRadius="@dimen/button_radius"
         app:icon="@drawable/settings"

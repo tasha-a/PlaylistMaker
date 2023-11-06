@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="text_setting_menu">16sp</dimen>
+
+<!--    Padding & Margin-->
     <dimen name="padding_vertical_set">21dp</dimen>
     <dimen name="padding_screen_hor">16dp</dimen>
-    <dimen name="button_radius">16dp</dimen>
-    <dimen name="text_button">20sp</dimen>
-    <dimen name="height_button">0dp</dimen>
     <dimen name="padding_screen_vert">4dp</dimen>
     <dimen name="marginTop_16">16dp</dimen>
-    <dimen name="text_basic22">22sp</dimen>
-    <dimen name="text_16">16sp</dimen>
+
+<!--    Button-->
+    <dimen name="button_radius">16dp</dimen>
+    <dimen name="height_button">0dp</dimen>
+
+<!--    Icon Size-->
     <dimen name="icon_size">24dp</dimen>
-    <dimen name="text_artist_11">11sp</dimen>
     <dimen name="ic_size_45">45dp</dimen>
+
+<!--    Text-->
+    <dimen name="text_basic22">22sp</dimen>
+    <dimen name="text_button">20sp</dimen>
+    <dimen name="text_16">16sp</dimen>
+    <dimen name="text_artist_11">11sp</dimen>
+    <dimen name="error_text">19sp</dimen>
+    <dimen name="text_button_update">14sp</dimen>
 </resources>

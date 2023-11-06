@@ -3,7 +3,6 @@ package com.example.playlistmaker
 import android.content.Context
 import android.os.Build
 import android.util.TypedValue
-import android.util.TypedValue.COMPLEX_UNIT_DIP
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -28,7 +29,7 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         trackNameView.text = model.trackName
         trackArtistView.text = model.artistName
-        trackTimeView.text = model.trackTime
+        trackTimeView.text = dateFormat(model.trackTimeMillis)
         Glide.with(itemView)
             .load(model.artworkUrl100)
             .placeholder(R.drawable.placeholder)
@@ -36,7 +37,6 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             .apply(RequestOptions.bitmapTransform(RoundedCorners(cornerRadiusPx)))
             .into(trackImage)
     }
-
 
     private fun dpToPx(dp: Int, context: Context): Int {
         return TypedValue.applyDimension(
@@ -46,4 +46,7 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         ).toInt()
     }
 
+    private fun dateFormat(mlsec: Int): String {
+        return SimpleDateFormat("mm:ss", Locale.getDefault()).format(mlsec)
+    }
 }

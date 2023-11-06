@@ -14,7 +14,8 @@
         <ImageButton
             android:id="@+id/back"
             style="@style/button_back"
-            android:src="@drawable/back_button" />
+            android:src="@drawable/back_button"
+            android:importantForAccessibility="no"/>
 
         <TextView
             style="@style/textTop"
@@ -43,20 +44,74 @@
             style="@style/edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minWidth="48dp"
             android:layout_marginEnd="40dp"
             android:drawablePadding="8dp"
             android:hint="@string/search"
             android:inputType="text"
             android:lines="1"
             android:maxLines="30"
-            android:minHeight="36dp" />
+            android:minHeight="48dp"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:importantForAccessibility="no"/>
 
     </FrameLayout>
+
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:visibility="visible"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+    <ImageView
+        android:id="@+id/img_error_server"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        tools:src="@drawable/error_internet_light" />
+
+    <TextView
+        android:id="@+id/text_error_server"
+        style="@style/text_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="136dp"
+        android:textAlignment="center"
+        android:visibility="gone"
+        tools:text="Проблемы со связью \n\ \n\ Загрузка не удалась. Проверьте подключение к интернету" />
+
+        <Button
+            android:id="@+id/button_update_view"
+            style="@style/button_update"
+            android:layout_width="wrap_content"
+            android:minWidth="90dp"
+            android:minHeight="48dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="248dp"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="8dp"
+            android:text="@string/button_update"
+            android:visibility="gone"
+            app:cornerRadius="54dp" />
+
+</FrameLayout>
+
+</FrameLayout>
+
 
 </LinearLayout>

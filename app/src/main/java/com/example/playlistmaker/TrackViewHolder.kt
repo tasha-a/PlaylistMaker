@@ -1,18 +1,17 @@
 package com.example.playlistmaker
 
 import android.content.Context
-import android.os.Build
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import java.text.SimpleDateFormat
 import java.util.Locale
+
 
 class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -21,10 +20,10 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val trackTimeView: TextView = itemView.findViewById(R.id.trackTime)
     private val trackImage: ImageView = itemView.findViewById(R.id.trackImage)
 
-    @RequiresApi(Build.VERSION_CODES.S)
     fun bind(model: Track, listener: TrackAdapter.TrackListener) {
 
         val cornerRadiusDp = 2
+//        val cornerRadiusPx = context.getDimensionPixelSize(cornerRadiusDp)
         val cornerRadiusPx = dpToPx(cornerRadiusDp, itemView.context)
 
         itemView.setOnClickListener {

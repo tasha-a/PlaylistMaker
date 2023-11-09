@@ -21,8 +21,8 @@ class History(val sharedPreferences: SharedPreferences) {
         var currentHistoryList = readSharePreference().toMutableList()
         currentHistoryList.removeIf { it.trackId == track.trackId }
         currentHistoryList.add(0, track)
-        if (currentHistoryList.size == MAX_SIZE_LIST) {
-            currentHistoryList.removeAt(0)
+        if (currentHistoryList.size > MAX_SIZE_LIST) {
+            currentHistoryList.dropLast(MAX_SIZE_LIST-1)
         }
         writeSharePreference(currentHistoryList)
     }

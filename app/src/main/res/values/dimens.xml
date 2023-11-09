@@ -24,4 +24,6 @@
     <dimen name="error_text">19sp</dimen>
     <dimen name="text_button_update">14sp</dimen>
     <dimen name="text_hint">19sp</dimen>
+
+    <dimen name="radius">2dp</dimen>
 </resources>

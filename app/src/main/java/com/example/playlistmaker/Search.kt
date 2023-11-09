@@ -39,6 +39,7 @@ class Search : AppCompatActivity(), TrackAdapter.TrackListener {
     lateinit var imageErrorView: ImageView
     lateinit var textErrorView: TextView
     lateinit var buttonUpdateView: Button
+    lateinit var clearButton: ImageView
     private val tracksBaseUrl = "https://itunes.apple.com"
     private val retrofit = Retrofit.Builder()
         .baseUrl(tracksBaseUrl)
@@ -56,11 +57,11 @@ class Search : AppCompatActivity(), TrackAdapter.TrackListener {
 
         trackAdapter = TrackAdapter(trackList, this)
         trackHistoryAdapter = TrackAdapter(trackListHistory, this)
-        sharedPreferences = getSharedPreferences(SEARCH_PREF, MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences(MY_PREF, MODE_PRIVATE)
         historyTracks = History(sharedPreferences)
 
         val buttonBack = findViewById<ImageButton>(R.id.back)
-        val clearButton = findViewById<ImageView>(R.id.clearIcon)
+        clearButton = findViewById(R.id.clearIcon)
         inputEditText = findViewById(R.id.searchView)
 
         imageErrorView = findViewById(R.id.img_error_server)
@@ -74,6 +75,8 @@ class Search : AppCompatActivity(), TrackAdapter.TrackListener {
             historyTracks.clearTrackListHistory()
             trackHistoryAdapter.listClear()
             trackHistoryAdapter.notifyDataSetChanged()
+            searchHint.visibility = View.GONE
+            buttonClearHistory.visibility = View.GONE
         }
 
         inputEditText.setOnEditorActionListener { _, actionId, _ ->
@@ -109,28 +112,31 @@ class Search : AppCompatActivity(), TrackAdapter.TrackListener {
             }
             trackAdapter.listClear()
             trackAdapter.notifyDataSetChanged()
+            searchHint.visibility = View.GONE
         }
 
 
         inputEditText.setOnFocusChangeListener { view, hasFocus ->
-            searchHint.visibility =
-                if (hasFocus && inputEditText.text.isEmpty()) View.VISIBLE else View.GONE
 
-            if (historyTracks.readSharePreference().isNotEmpty()) {
-                buttonClearHistory.visibility = View.VISIBLE
-                trackListHistory.addAll(historyTracks.readSharePreference()!!)
-                trackHistoryAdapter = TrackAdapter(trackListHistory.toMutableList(), this)
-                recycler.adapter = trackHistoryAdapter
-                trackHistoryAdapter.notifyItemRangeChanged(0, MAX_SIZE_LIST)
-            }
+                if (hasFocus && inputEditText.text.isEmpty() && historyTracks.readSharePreference().isNotEmpty()) {
+                    searchHint.visibility = View.VISIBLE
+                    buttonClearHistory.visibility = View.VISIBLE
+                    trackListHistory.addAll(historyTracks.readSharePreference()!!)
+                    trackHistoryAdapter = TrackAdapter(trackListHistory.toMutableList(), this)
+                    recycler.adapter = trackHistoryAdapter
+                    trackHistoryAdapter.notifyItemRangeChanged(0, MAX_SIZE_LIST)
+
+                } else  searchHint.visibility = View.GONE
         }
 
 
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                searchHint.visibility =
-                    if (inputEditText.hasFocus() && s?.isEmpty() == true) View.VISIBLE else View.GONE
+                searchHint.visibility = View.GONE
+                buttonClearHistory.visibility = View.GONE
+                trackHistoryAdapter.listClear()
+                trackHistoryAdapter.notifyDataSetChanged()
                 if (s.isNullOrEmpty()) {
                     clearButton.visibility = View.GONE
                 } else {
@@ -176,6 +182,7 @@ class Search : AppCompatActivity(), TrackAdapter.TrackListener {
         imageErrorView.visibility = View.VISIBLE
         buttonUpdateView.visibility = View.VISIBLE
         recycler.visibility = View.GONE
+        buttonClearHistory.visibility = View.GONE
     }
 
     fun showErrorEmpty() {
@@ -192,6 +199,7 @@ class Search : AppCompatActivity(), TrackAdapter.TrackListener {
         textErrorView.visibility = View.VISIBLE
         imageErrorView.visibility = View.VISIBLE
         recycler.visibility = View.GONE
+        buttonClearHistory.visibility = View.GONE
     }
 
     fun search() {
@@ -201,20 +209,16 @@ class Search : AppCompatActivity(), TrackAdapter.TrackListener {
                     if (response.isSuccessful) {
                         trackList.clear()
                         trackAdapter.listClear()
-                        if (recycler.visibility == View.GONE) {
-                            recycler.visibility = View.VISIBLE
-                        }
-                        if (textErrorView.visibility == View.VISIBLE) {
-                            textErrorView.visibility = View.GONE
-                        }
-                        if (imageErrorView.visibility == View.VISIBLE) {
-                            imageErrorView.visibility = View.GONE
-                        }
-                        if (buttonUpdateView.visibility == View.VISIBLE) {
-                            buttonUpdateView.visibility = View.GONE
-                        }
-                        if (response.body()?.results?.isNotEmpty() == true) {
-                            trackList.addAll(response.body()?.results!!)
+
+                        recycler.visibility = View.VISIBLE
+                        textErrorView.visibility = View.GONE
+                        imageErrorView.visibility = View.GONE
+                        buttonUpdateView.visibility = View.GONE
+
+                        val results = response.body()?.results
+
+                        if (results?.isNotEmpty() == true) {
+                            trackList.addAll(results!!)
                             recycler.adapter = trackAdapter
                             trackAdapter.notifyDataSetChanged()
                         } else {

@@ -12,19 +12,26 @@ const val MAX_SIZE_LIST = 10
 class History(val sharedPreferences: SharedPreferences) {
 
     private val sharePrefer = sharedPreferences
+    private var historyTrackList: MutableList<Track>? = mutableListOf()
 
     fun clearTrackListHistory() {
         sharePrefer.edit().clear().apply()
+        historyTrackList?.clear()
+    }
+
+    fun getHistoryList() : List<Track> {
+        if (historyTrackList != null) return historyTrackList!!
+        else return emptyList()
     }
 
     fun addSharePreference(track: Track) {
-        var currentHistoryList = readSharePreference().toMutableList()
-        currentHistoryList.removeIf { it.trackId == track.trackId }
-        currentHistoryList.add(0, track)
-        if (currentHistoryList.size > MAX_SIZE_LIST) {
-            currentHistoryList.dropLast(MAX_SIZE_LIST-1)
+//        historyTrackList = readSharePreference().toMutableList()
+        historyTrackList?.removeIf { it.trackId == track.trackId }
+        historyTrackList?.add(0, track)
+        if (historyTrackList!!.size > MAX_SIZE_LIST) {
+            historyTrackList = historyTrackList!!.subList(0, MAX_SIZE_LIST)
         }
-        writeSharePreference(currentHistoryList)
+        writeSharePreference(historyTrackList!!)
     }
 
     private fun writeSharePreference(tracks: MutableList<Track>) {
@@ -34,9 +41,11 @@ class History(val sharedPreferences: SharedPreferences) {
             .apply()
     }
 
-    fun readSharePreference(): List<Track> {
-        val json = sharePrefer.getString(HISTORY_LIST, null) ?: return emptyList()
-        return Gson().fromJson(json, Array<Track>::class.java).toList()
+    fun readSharePreference() {
+        val json = sharePrefer.getString(HISTORY_LIST, null)
+        if (json != null) {
+            historyTrackList = Gson().fromJson(json, Array<Track>::class.java).toMutableList()
+        }
     }
 
 }

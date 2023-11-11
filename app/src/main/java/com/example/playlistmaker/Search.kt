@@ -30,7 +30,6 @@ class Search : AppCompatActivity(), TrackAdapter.TrackListener {
     lateinit var recycler: RecyclerView
     lateinit var trackAdapter: TrackAdapter
     private var trackList: MutableList<Track> = mutableListOf()
-    private var trackListHistory: MutableList<Track> = mutableListOf()
     lateinit var searchHint: TextView
     lateinit var buttonClearHistory: Button
     private lateinit var sharedPreferences: SharedPreferences
@@ -54,11 +53,11 @@ class Search : AppCompatActivity(), TrackAdapter.TrackListener {
         setContentView(R.layout.activity_search)
 
         recycler = findViewById(R.id.recyclerView)
-
         trackAdapter = TrackAdapter(trackList, this)
-        trackHistoryAdapter = TrackAdapter(trackListHistory, this)
         sharedPreferences = getSharedPreferences(MY_PREF, MODE_PRIVATE)
         historyTracks = History(sharedPreferences)
+        historyTracks.readSharePreference()
+        trackHistoryAdapter = TrackAdapter(historyTracks.getHistoryList().toMutableList(), this)
 
         val buttonBack = findViewById<ImageButton>(R.id.back)
         clearButton = findViewById(R.id.clearIcon)
@@ -69,6 +68,9 @@ class Search : AppCompatActivity(), TrackAdapter.TrackListener {
         buttonUpdateView = findViewById(R.id.button_update_view)
         searchHint = findViewById(R.id.searchHint)
         buttonClearHistory = findViewById(R.id.button_clear_history)
+
+
+
 
 
         buttonClearHistory.setOnClickListener {
@@ -96,37 +98,22 @@ class Search : AppCompatActivity(), TrackAdapter.TrackListener {
             // Скрыть клавиатуру
             val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(inputEditText.getWindowToken(), 0)
-
+            imageErrorView.visibility = View.GONE
+            textErrorView.visibility = View.GONE
+            buttonUpdateView.visibility = View.GONE
+            searchHint.visibility = View.GONE
             buttonClearHistory.visibility = View.GONE
-
-            if (imageErrorView.visibility == View.VISIBLE) {
-                imageErrorView.visibility = View.GONE
-            }
-
-            if (textErrorView.visibility == View.VISIBLE) {
-                textErrorView.visibility = View.GONE
-            }
-
-            if (buttonUpdateView.visibility == View.VISIBLE) {
-                buttonUpdateView.visibility = View.GONE
-            }
             trackAdapter.listClear()
             trackAdapter.notifyDataSetChanged()
-            searchHint.visibility = View.GONE
+            trackHistoryAdapter.listClear()
+            trackAdapter.notifyDataSetChanged()
+            inputEditText.clearFocus()
         }
 
-
         inputEditText.setOnFocusChangeListener { view, hasFocus ->
-
-                if (hasFocus && inputEditText.text.isEmpty() && historyTracks.readSharePreference().isNotEmpty()) {
-                    searchHint.visibility = View.VISIBLE
-                    buttonClearHistory.visibility = View.VISIBLE
-                    trackListHistory.addAll(historyTracks.readSharePreference()!!)
-                    trackHistoryAdapter = TrackAdapter(trackListHistory.toMutableList(), this)
-                    recycler.adapter = trackHistoryAdapter
-                    trackHistoryAdapter.notifyItemRangeChanged(0, MAX_SIZE_LIST)
-
-                } else  searchHint.visibility = View.GONE
+            if (hasFocus && inputEditText.text.isEmpty()) {
+                startRecyclerHistory()
+            }
         }
 
 
@@ -137,8 +124,10 @@ class Search : AppCompatActivity(), TrackAdapter.TrackListener {
                 buttonClearHistory.visibility = View.GONE
                 trackHistoryAdapter.listClear()
                 trackHistoryAdapter.notifyDataSetChanged()
+
                 if (s.isNullOrEmpty()) {
                     clearButton.visibility = View.GONE
+                    startRecyclerHistory()
                 } else {
                     input += s.toString()
                     clearButton.visibility = View.VISIBLE
@@ -240,4 +229,17 @@ class Search : AppCompatActivity(), TrackAdapter.TrackListener {
     override fun onClick(track: Track) {
         historyTracks.addSharePreference(track)
     }
+
+    fun startRecyclerHistory() {
+        if (historyTracks.getHistoryList().isNotEmpty()) {
+            searchHint.visibility = View.VISIBLE
+            buttonClearHistory.visibility = View.VISIBLE
+            trackHistoryAdapter.listClear()
+            trackHistoryAdapter.notifyDataSetChanged()
+            trackHistoryAdapter = TrackAdapter(historyTracks.getHistoryList().toMutableList(), this)
+            recycler.adapter = trackHistoryAdapter
+            trackHistoryAdapter.notifyDataSetChanged()
+        }
+    }
+
 }

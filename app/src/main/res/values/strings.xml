@@ -30,4 +30,11 @@
     <string name="text_search_hint">Вы искали</string>
     <string name="text_buton_clear_history">Очистить историю</string>
 
+<!--    Audio player-->
+    <string name="time_track">Длительность</string>
+    <string name="album_track">Альбом</string>
+    <string name="year_track">Год</string>
+    <string name="genre_track">Жанр</string>
+    <string name="country_track">Страна</string>
+
 </resources>

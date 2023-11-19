@@ -6,6 +6,13 @@
     <dimen name="padding_screen_hor">16dp</dimen>
     <dimen name="padding_screen_vert">4dp</dimen>
     <dimen name="marginTop_16">16dp</dimen>
+    <dimen name="marginTitleTrack">8dp</dimen>
+    <dimen name="audio_player_guideLine">16dp</dimen>
+    <dimen name="audio_player_margin_back_button">4dp</dimen>
+    <dimen name="audio_player_marginVertical_imgCover">8dp</dimen>
+    <dimen name="audio_player_width">0dp</dimen>
+    <dimen name="audio_player_marginBottom">30dp</dimen>
+    <dimen name="audio_player_marginBottom_fieldBottom">28dp</dimen>
 
 <!--    Button-->
     <dimen name="button_radius">16dp</dimen>
@@ -15,15 +22,19 @@
     <dimen name="icon_size">24dp</dimen>
     <dimen name="ic_size_45">45dp</dimen>
     <dimen name="min_height_48">48dp</dimen>
+    <dimen name="audio_placeholder_size">312dp</dimen>
 
 <!--    Text-->
     <dimen name="text_basic22">22sp</dimen>
+    <dimen name="text_basic14">14sp</dimen>
     <dimen name="text_button">20sp</dimen>
     <dimen name="text_16">16sp</dimen>
     <dimen name="text_artist_11">11sp</dimen>
     <dimen name="error_text">19sp</dimen>
     <dimen name="text_button_update">14sp</dimen>
     <dimen name="text_hint">19sp</dimen>
+    <dimen name="infoTrack_size">13sp</dimen>
+    <dimen name="timerTrack_size">14sp</dimen>
 
     <dimen name="radius">2dp</dimen>
 </resources>

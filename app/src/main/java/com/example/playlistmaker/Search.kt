@@ -1,6 +1,7 @@
 package com.example.playlistmaker
 
 import android.app.Activity
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
@@ -22,9 +23,8 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-const val SEARCH_PREF = "search_pref"
-
 class Search : AppCompatActivity(), TrackAdapter.TrackListener {
+
     private var input: String = ""
     private lateinit var inputEditText: EditText
     lateinit var recycler: RecyclerView
@@ -46,11 +46,13 @@ class Search : AppCompatActivity(), TrackAdapter.TrackListener {
         .build()
 
     private val tracksService = retrofit.create(TrackApi::class.java)
+    private val playerIntent: Intent by lazy { Intent(this, AudioPlayerActivity::class.java) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+
 
         recycler = findViewById(R.id.recyclerView)
         trackAdapter = TrackAdapter(trackList, this)
@@ -68,10 +70,6 @@ class Search : AppCompatActivity(), TrackAdapter.TrackListener {
         buttonUpdateView = findViewById(R.id.button_update_view)
         searchHint = findViewById(R.id.searchHint)
         buttonClearHistory = findViewById(R.id.button_clear_history)
-
-
-
-
 
         buttonClearHistory.setOnClickListener {
             historyTracks.clearTrackListHistory()
@@ -228,6 +226,8 @@ class Search : AppCompatActivity(), TrackAdapter.TrackListener {
 
     override fun onClick(track: Track) {
         historyTracks.addSharePreference(track)
+        TrackProvider.setTrack(track)
+        startActivity(playerIntent)
     }
 
     fun startRecyclerHistory() {

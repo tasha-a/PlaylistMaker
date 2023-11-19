@@ -1,17 +1,12 @@
 package com.example.playlistmaker
 
-import android.content.Context
-import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
-import java.text.SimpleDateFormat
-import java.util.Locale
-
 
 class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -23,8 +18,8 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(model: Track, listener: TrackAdapter.TrackListener) {
 
         val cornerRadiusDp = 2
-//        val cornerRadiusPx = context.getDimensionPixelSize(cornerRadiusDp)
-        val cornerRadiusPx = dpToPx(cornerRadiusDp, itemView.context)
+        val cornerRadiusPx = TrackProvider.dpToPx(cornerRadiusDp, itemView.context)
+        val timeTrackMs = TrackProvider.dateFormat(model.trackTimeMillis)
 
         itemView.setOnClickListener {
             listener.onClick(model)
@@ -32,24 +27,13 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         trackNameView.text = model.trackName
         trackArtistView.text = model.artistName
-        trackTimeView.text = dateFormat(model.trackTimeMillis)
+        trackTimeView.text = timeTrackMs
         Glide.with(itemView)
             .load(model.artworkUrl100)
             .placeholder(R.drawable.placeholder)
-            .centerCrop()
-            .apply(RequestOptions.bitmapTransform(RoundedCorners(cornerRadiusPx)))
+            .transform(CenterCrop(), RoundedCorners(cornerRadiusPx))
             .into(trackImage)
+
     }
 
-    private fun dpToPx(dp: Int, context: Context): Int {
-        return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            dp.toFloat(),
-            context.resources.displayMetrics
-        ).toInt()
-    }
-
-    private fun dateFormat(mlsec: Int): String {
-        return SimpleDateFormat("mm:ss", Locale.getDefault()).format(mlsec)
-    }
 }

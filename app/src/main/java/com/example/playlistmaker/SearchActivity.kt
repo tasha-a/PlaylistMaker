@@ -23,7 +23,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class Search : AppCompatActivity(), TrackAdapter.TrackListener {
+class SearchActivity : AppCompatActivity(), TrackAdapter.TrackListener {
 
     private var input: String = ""
     private lateinit var inputEditText: EditText
@@ -46,8 +46,6 @@ class Search : AppCompatActivity(), TrackAdapter.TrackListener {
         .build()
 
     private val tracksService = retrofit.create(TrackApi::class.java)
-    private val playerIntent: Intent by lazy { Intent(this, AudioPlayerActivity::class.java) }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -226,8 +224,9 @@ class Search : AppCompatActivity(), TrackAdapter.TrackListener {
 
     override fun onClick(track: Track) {
         historyTracks.addSharePreference(track)
-        TrackProvider.setTrack(track)
-        startActivity(playerIntent)
+        val intent = Intent(this, AudioPlayerActivity::class.java)
+        intent.putExtra("track", track)
+        startActivity(intent)
     }
 
     fun startRecyclerHistory() {

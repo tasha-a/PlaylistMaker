@@ -1,9 +1,11 @@
 package com.example.playlistmaker
 
+import android.os.Build
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -11,21 +13,18 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
 class AudioPlayerActivity : AppCompatActivity() {
 
-    lateinit var titleField: TextView
-    lateinit var track: Track
-    lateinit var artistField: TextView
-    lateinit var timeField: TextView
-    lateinit var albumField: TextView
-    lateinit var releaseField: TextView
-    lateinit var genreField: TextView
-    lateinit var countryField: TextView
-    lateinit var coverField: ImageView
+    private lateinit var titleField: TextView
+//    private lateinit var track: Track
+    private lateinit var artistField: TextView
+    private lateinit var timeField: TextView
+    private lateinit var albumField: TextView
+    private lateinit var releaseField: TextView
+    private lateinit var genreField: TextView
+    private lateinit var countryField: TextView
+    private lateinit var coverField: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_audio_player)
-
-        val buttonBack = findViewById<ImageButton>(R.id.back)
-        buttonBack.setOnClickListener() { finish() }
 
         titleField = findViewById(R.id.name_track_field)
         artistField = findViewById(R.id.artist_track_field)
@@ -36,10 +35,19 @@ class AudioPlayerActivity : AppCompatActivity() {
         countryField = findViewById(R.id.country_track_field)
         coverField = findViewById(R.id.cover_track)
 
-        if (TrackProvider.getTrack() != null) {
-            track = TrackProvider.getTrack()!!
-            fillFields(track)
+        val track: Track? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra("track", Track::class.java)
+        } else {
+            intent.getParcelableExtra("track")
         }
+
+        val buttonBack = findViewById<ImageButton>(R.id.back)
+        buttonBack.setOnClickListener { finish() }
+
+
+       fillFields(track!!)
+
+
     }
 
     private fun fillFields(track: Track) {
@@ -52,7 +60,7 @@ class AudioPlayerActivity : AppCompatActivity() {
         genreField.text = track.primaryGenreName
         countryField.text = track.country
 
-        val artworkUrl512 = TrackProvider.getCoverArtwork(track.artworkUrl100)
+        val artworkUrl512 = track.artworkUrl512
         val cornerRadiusDp = 8
         val cornerRadiusPx = TrackProvider.dpToPx(cornerRadiusDp, this)
 
@@ -63,3 +71,4 @@ class AudioPlayerActivity : AppCompatActivity() {
             .into(coverField)
     }
 }
+

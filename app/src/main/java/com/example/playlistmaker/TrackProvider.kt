@@ -29,8 +29,4 @@ object TrackProvider {
         ).toInt()
     }
 
-    fun getCoverArtwork(coverUrl: String): String {
-        return coverUrl.replaceAfterLast('/', "512x512bb.jpg")
-    }
-
 }

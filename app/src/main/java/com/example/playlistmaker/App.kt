@@ -1,7 +1,6 @@
 package com.example.playlistmaker
 
 import android.app.Application
-import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 
 const val MY_PREF = "my_pref"
@@ -10,7 +9,6 @@ const val DARK_MODE = "dark_mode"
 class App : Application() {
 
     private var darkTheme = false
-
 
     override fun onCreate() {
         super.onCreate()

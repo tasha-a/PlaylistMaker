@@ -1,10 +1,7 @@
 package com.example.playlistmaker
 
 import android.content.SharedPreferences
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
-
 
 const val HISTORY_LIST = "history_list"
 const val MAX_SIZE_LIST = 10
@@ -25,7 +22,6 @@ class History(val sharedPreferences: SharedPreferences) {
     }
 
     fun addSharePreference(track: Track) {
-//        historyTrackList = readSharePreference().toMutableList()
         historyTrackList?.removeIf { it.trackId == track.trackId }
         historyTrackList?.add(0, track)
         if (historyTrackList!!.size > MAX_SIZE_LIST) {

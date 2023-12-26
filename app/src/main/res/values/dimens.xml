@@ -23,6 +23,7 @@
     <dimen name="ic_size_45">45dp</dimen>
     <dimen name="min_height_48">48dp</dimen>
     <dimen name="audio_placeholder_size">312dp</dimen>
+    <dimen name="progressBar_size">44dp</dimen>
 
 <!--    Text-->
     <dimen name="text_basic22">22sp</dimen>

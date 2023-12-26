@@ -1,39 +1,47 @@
 package com.example.playlistmaker
 
+import android.content.res.Configuration
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.playlistmaker.databinding.ActivityAudioPlayerBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class AudioPlayerActivity : AppCompatActivity() {
 
-    private lateinit var titleField: TextView
-//    private lateinit var track: Track
-    private lateinit var artistField: TextView
-    private lateinit var timeField: TextView
-    private lateinit var albumField: TextView
-    private lateinit var releaseField: TextView
-    private lateinit var genreField: TextView
-    private lateinit var countryField: TextView
-    private lateinit var coverField: ImageView
+    companion object {
+        private const val STATE_DEFAULT = 0
+        private const val STATE_PREPARED = 1
+        private const val STATE_PLAYING = 2
+        private const val STATE_PAUSED = 3
+        private const val TIMER_DELAY = 1000L
+        private const val SECONDS_COUNT = 29000
+    }
+
+    private var mainThreadHandler: Handler? = null
+    private var playerState = STATE_DEFAULT
+    private lateinit var binding: ActivityAudioPlayerBinding
+    private lateinit var urlSound: String
+    private var mediaPlayer = MediaPlayer()
+    private var trackMls: Int = 0
+    private var currentPosition = 0
+    private var run: Runnable? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_audio_player)
 
-        titleField = findViewById(R.id.name_track_field)
-        artistField = findViewById(R.id.artist_track_field)
-        timeField = findViewById(R.id.time_track_field)
-        albumField = findViewById(R.id.album_track_field)
-        releaseField = findViewById(R.id.year_track_field)
-        genreField = findViewById(R.id.genre_track_field)
-        countryField = findViewById(R.id.country_track_field)
-        coverField = findViewById(R.id.cover_track)
+        binding = ActivityAudioPlayerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        mainThreadHandler = Handler(Looper.getMainLooper())
 
         val track: Track? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("track", Track::class.java)
@@ -41,34 +49,128 @@ class AudioPlayerActivity : AppCompatActivity() {
             intent.getParcelableExtra("track")
         }
 
-        val buttonBack = findViewById<ImageButton>(R.id.back)
-        buttonBack.setOnClickListener { finish() }
+        binding.back.setOnClickListener {
+            mediaPlayer.stop()
+            finish()
+        }
 
+        fillFields(track!!)
 
-       fillFields(track!!)
+        preparePlayer()
+        binding.playButton.setOnClickListener {
+            playbackControl()
+        }
+    }
 
+    override fun onPause() {
+        super.onPause()
+        pausePlayer()
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer.release()
     }
 
     private fun fillFields(track: Track) {
 
-        titleField.text = track.trackName
-        artistField.text = track.artistName
-        timeField.text = TrackProvider.dateFormat(track.trackTimeMillis)
-        albumField.text = track.collectionName
-        releaseField.text = track.releaseDate.substring(0, 4)
-        genreField.text = track.primaryGenreName
-        countryField.text = track.country
+        trackMls = track.trackTimeMillis
+        binding.nameTrackField.text = track.trackName
+        binding.artistTrackField.text = track.artistName
+        binding.timeTrackField.text = track.dateFormat(track.trackTimeMillis)
+        binding.timerTrack.text = track.dateFormat(track.trackTimeMillis)
+        binding.albumTrackField.text = track.collectionName
+        binding.yearTrackField.text = track.releaseDate.substring(0, 4)
+        binding.genreTrackField.text = track.primaryGenreName
+        binding.countryTrackField.text = track.country
+        urlSound = track.previewUrl
+
 
         val artworkUrl512 = track.artworkUrl512
         val cornerRadiusDp = 8
-        val cornerRadiusPx = TrackProvider.dpToPx(cornerRadiusDp, this)
+        val cornerRadiusPx = track.dpToPx(cornerRadiusDp, this)
 
         Glide.with(this)
             .load(artworkUrl512)
             .placeholder(R.drawable.placeholder_312)
             .transform(CenterCrop(), RoundedCorners(cornerRadiusPx))
-            .into(coverField)
+            .into(binding.coverTrack)
+    }
+
+    private fun preparePlayer() {
+        mediaPlayer.setDataSource(urlSound)
+        mediaPlayer.prepareAsync()
+        mediaPlayer.setOnPreparedListener {
+            playerState = STATE_PREPARED
+        }
+        mediaPlayer.setOnCompletionListener {
+            binding.timerTrack.text = dateFormat(0)
+            playImg()
+            run = null
+            playerState = STATE_PREPARED
+        }
+    }
+
+    private fun playbackControl() {
+        when (playerState) {
+            STATE_PLAYING -> {
+                pausePlayer()
+            }
+
+            STATE_PREPARED, STATE_PAUSED -> {
+                startPlayer()
+            }
+        }
+    }
+
+
+    private fun startPlayer() {
+        mainThreadHandler?.post(startTimer())
+        mediaPlayer.start()
+        pauseImg()
+        playerState = STATE_PLAYING
+    }
+
+    private fun pausePlayer() {
+        run?.let {
+            mainThreadHandler?.removeCallbacks(it)
+        }
+        mediaPlayer.pause()
+        playImg()
+        playerState = STATE_PAUSED
+    }
+
+
+    private fun startTimer(): Runnable {
+        run = object : Runnable {
+            override fun run() {
+                if (mediaPlayer.currentPosition < SECONDS_COUNT) {
+                    binding.timerTrack.text = dateFormat(mediaPlayer.currentPosition)
+                    mainThreadHandler?.postDelayed(this, TIMER_DELAY / 2)
+                }
+            }
+        }
+        return run!!
+    }
+
+
+    private fun dateFormat(mlsec: Int): String {
+        return SimpleDateFormat("mm:ss", Locale.getDefault()).format(mlsec)
+    }
+
+    private fun pauseImg() {
+        when (resources.configuration.uiMode.and(Configuration.UI_MODE_NIGHT_MASK)) {
+            Configuration.UI_MODE_NIGHT_YES -> binding.playButton.setImageResource(R.drawable.pause_dark)
+
+            Configuration.UI_MODE_NIGHT_NO -> binding.playButton.setImageResource(R.drawable.pause_light)
+        }
+    }
+
+    private fun playImg() {
+        when (resources.configuration.uiMode.and(Configuration.UI_MODE_NIGHT_MASK)) {
+            Configuration.UI_MODE_NIGHT_YES -> binding.playButton.setImageResource(R.drawable.play_dark)
+
+            Configuration.UI_MODE_NIGHT_NO -> binding.playButton.setImageResource(R.drawable.play_light)
+        }
     }
 }
-

@@ -79,6 +79,13 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:visibility="visible"/>
 
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressBar"
+        style="@style/progressBar"
+        android:layout_marginTop="148dp"
+        android:indeterminate="true"
+        android:visibility="gone" />
+
     <Button
         android:id="@+id/button_clear_history"
         style="@style/button_style"

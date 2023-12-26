@@ -18,8 +18,8 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(model: Track, listener: TrackAdapter.TrackListener) {
 
         val cornerRadiusDp = 2
-        val cornerRadiusPx = TrackProvider.dpToPx(cornerRadiusDp, itemView.context)
-        val timeTrackMs = TrackProvider.dateFormat(model.trackTimeMillis)
+        val cornerRadiusPx = model.dpToPx(cornerRadiusDp, itemView.context)
+        val timeTrackMs = model.dateFormat(model.trackTimeMillis)
 
         itemView.setOnClickListener {
             listener.onClick(model)
